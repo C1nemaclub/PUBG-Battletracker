@@ -333,8 +333,9 @@ html {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 40%;
+        width: 45%;
         min-width: 211px;
+        max-width: 240px;
         flex-direction: column;
         .header {
           text-align: center;
