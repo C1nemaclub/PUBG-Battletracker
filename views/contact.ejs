@@ -14,36 +14,41 @@
     <title>PUBGrabStat Contact</title>
   </head>
   <body>
+    <div id="preloader"></div>
+
     <div class="contact-page">
       <%- include("./partials/header.ejs") %>
 
       <div class="header">CONTACT US</div>
       <div class="content-section">
-        <form action="" class="contact">
+        <form action="/info" class="contact" method="POST">
           <input
+            name="sender"
             type="name"
             class="contact-name cta"
             placeholder="Enter Name"
           />
           <input
+            name="email"
             type="email"
             class="contact-email cta"
             placeholder="Enter Email"
           />
           <input
+            name="subject"
             type="text"
             class="contact-subject cta"
             placeholder="Enter Subject"
           />
           <textarea
-            name="message"
+            name="messagge"
             id=""
             cols="30"
             rows="8"
             class="contact-message cta"
             placeholder="Enter Message"
           ></textarea>
-          <button class="contact-button cta">Submit</button>
+          <button class="contact-button cta" type="submit">Submit</button>
         </form>
       </div>
       <div class="footer">
@@ -63,6 +68,11 @@
       </div>
     </div>
     <script>
+      const loader = document.querySelector('#preloader');
+      window.addEventListener('load', () => {
+        loader.style.display = 'none';
+      });
+
       const previousCurrent = document.querySelector('.current');
       const presentCurrent = document.querySelector('.contactCurrent');
       previousCurrent.classList.remove('current');

@@ -30,7 +30,8 @@ html {
 .dashboard,
 .main-index,
 .contact-page,
-.error-section {
+.error-section,
+.about-page {
   min-height: 100vh;
   width: 100%;
   background: var(--main-color);
@@ -49,10 +50,11 @@ html {
 //* --------------------NAV BAR----------------------
 .nav-bar {
   width: 80%;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0;
   .menu-open,
   .menu-close {
     display: none;
@@ -598,7 +600,7 @@ html {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   background: var(--main-color);

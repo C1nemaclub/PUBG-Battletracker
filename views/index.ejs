@@ -12,6 +12,8 @@
     ></script>
   </head>
   <body>
+    <div id="preloader"></div>
+
     <div class="main-index">
       <%- include("./partials/header.ejs") %>
       <div class="hero">
@@ -38,6 +40,11 @@
     </div>
   </body>
   <script>
+    const loader = document.querySelector('#preloader');
+    window.addEventListener('load', () => {
+      loader.style.display = 'none';
+    });
+
     document.querySelector('.submit-btn').disabled = true; //Disable at first
 
     document.querySelector('.input-box').addEventListener('keyup', (e) => {

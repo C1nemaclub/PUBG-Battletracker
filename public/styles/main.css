@@ -31,7 +31,8 @@ html {
 .dashboard,
 .main-index,
 .contact-page,
-.error-section {
+.error-section,
+.about-page {
   min-height: 100vh;
   width: 100%;
   background: var(--main-color);
@@ -50,7 +51,7 @@ html {
 
 .nav-bar {
   width: 80%;
-  margin: auto;
+  margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -60,6 +61,7 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0;
 }
 
 .nav-bar .menu-open,
@@ -824,9 +826,9 @@ html {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;

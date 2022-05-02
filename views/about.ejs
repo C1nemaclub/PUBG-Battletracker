@@ -14,6 +14,8 @@
     <title>PUBGrabStat About</title>
   </head>
   <body>
+    <div id="preloader"></div>
+
     <div class="about-page">
       <%- include("./partials/header.ejs") %>
 
@@ -51,6 +53,11 @@
       </div>
     </div>
     <script>
+      const loader = document.querySelector('#preloader');
+      window.addEventListener('load', () => {
+        loader.style.display = 'none';
+      });
+
       const previousCurrent = document.querySelector('.current');
       const presentCurrent = document.querySelector('.aboutCurrent');
       previousCurrent.classList.remove('current');
