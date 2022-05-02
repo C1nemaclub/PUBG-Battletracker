@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+    <script
+      src="https://kit.fontawesome.com/b109f342ec.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>PUBGrabStat Contact</title>
+  </head>
+  <body>
+    <div class="contact-page">
+      <%- include("./partials/header.ejs") %>
+
+      <div class="header">CONTACT US</div>
+      <div class="content-section">
+        <form action="" class="contact">
+          <input
+            type="name"
+            class="contact-name cta"
+            placeholder="Enter Name"
+          />
+          <input
+            type="email"
+            class="contact-email cta"
+            placeholder="Enter Email"
+          />
+          <input
+            type="text"
+            class="contact-subject cta"
+            placeholder="Enter Subject"
+          />
+          <textarea
+            name="message"
+            id=""
+            cols="30"
+            rows="8"
+            class="contact-message cta"
+            placeholder="Enter Message"
+          ></textarea>
+          <button class="contact-button cta">Submit</button>
+        </form>
+      </div>
+      <div class="footer">
+        <div class="about-section">
+          <p class="title"><a href="/info/about">About US</a></p>
+          <p class="message">Find out more about us.</p>
+          <div class="social-media">
+            <a href="https://github.com/C1nemaclub"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="https://www.instagram.com/santiagovm18/"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+          </div>
+          <p class="autor">Made by Santiago Velasquez(Cinemaclub)</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const previousCurrent = document.querySelector('.current');
+      const presentCurrent = document.querySelector('.contactCurrent');
+      previousCurrent.classList.remove('current');
+      presentCurrent.classList.add('current');
+
+      const nav_list = document.querySelector('.list-items');
+      const open_icon = document.querySelector('.menu-open');
+      const close_icon = document.querySelector('.menu-close');
+
+      open_icon.addEventListener('click', () => {
+        nav_list.style.left = '85%';
+        open_icon.style.display = 'none';
+        close_icon.style.display = 'unset';
+      });
+      close_icon.addEventListener('click', () => {
+        nav_list.style.left = '125%';
+        open_icon.style.display = 'unset';
+        close_icon.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PUBGrabStat Home</title>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <script
+      src="https://kit.fontawesome.com/b109f342ec.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main-index">
+      <%- include("./partials/header.ejs") %>
+      <div class="hero">
+        <h1>START SEARCHING FOR <br /><span>PUBG</span> STATISTICS!</h1>
+        <form action="/users" method="POST" class="search-box">
+          <select name="platform" id="platform-select" class="input-platform">
+            <option value="steam">Steam</option>
+            <option value="psn">PSN</option>
+            <option value="xbox">XBOX</option>
+            <option value="stadia">Stadia</option>
+          </select>
+          <input
+            type="text"
+            name="playerName"
+            class="input-box"
+            placeholder="Search..."
+          />
+          <button type="submit" name="" class="submit-btn button">
+            <i class="fa-solid fa-magnifying-glass fas"></i>
+          </button>
+        </form>
+      </div>
+      <%- include("./partials/aboutfooter.ejs") %>
+    </div>
+  </body>
+  <script>
+    document.querySelector('.submit-btn').disabled = true; //Disable at first
+
+    document.querySelector('.input-box').addEventListener('keyup', (e) => {
+      if (e.target.value == '') {
+        document.querySelector('.submit-btn').disabled = true;
+      } else {
+        document.querySelector('.submit-btn').disabled = false;
+      }
+    });
+
+    const nav_list = document.querySelector('.list-items');
+    const open_icon = document.querySelector('.menu-open');
+    const close_icon = document.querySelector('.menu-close');
+
+    open_icon.addEventListener('click', () => {
+      nav_list.style.left = '85%';
+      open_icon.style.display = 'none';
+      close_icon.style.display = 'unset';
+    });
+    close_icon.addEventListener('click', () => {
+      nav_list.style.left = '125%';
+      open_icon.style.display = 'unset';
+      close_icon.style.display = 'none';
+    });
+  </script>
+</html>

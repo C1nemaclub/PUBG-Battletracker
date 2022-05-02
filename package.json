@@ -1,0 +1,24 @@
+{
+  "name": "pugbtake2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon -e js,ejs,html -w . -w public -w views -w routes -w models server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.7",
+    "express": "^4.18.1",
+    "nedb": "^1.8.0",
+    "node-fetch": "^2.6.7"
+  }
+}

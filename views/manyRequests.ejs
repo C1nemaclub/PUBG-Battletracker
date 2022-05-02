@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/b109f342ec.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <section class="error-section">
+      <%- include("./partials/header.ejs") %>
+      <div class="error-content"></div>
+      <%- include("./partials/errorfooter.ejs") %>
+    </section>
+    <script>
+      const nav_list = document.querySelector('.list-items');
+      const open_icon = document.querySelector('.menu-open');
+      const close_icon = document.querySelector('.menu-close');
+
+      open_icon.addEventListener('click', () => {
+        nav_list.style.left = '85%';
+        open_icon.style.display = 'none';
+        close_icon.style.display = 'unset';
+      });
+      close_icon.addEventListener('click', () => {
+        nav_list.style.left = '125%';
+        open_icon.style.display = 'unset';
+        close_icon.style.display = 'none';
+      });
+    </script>
+    <script>
+      let status = '<%= error %>';
+      const error = document.querySelector('.error');
+      const errorMessage = document.querySelector('.error-message');
+      errorMessage.textContent = 'Too many requests';
+      error.textContent = status;
+    </script>
+  </body>
+</html>

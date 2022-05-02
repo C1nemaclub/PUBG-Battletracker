@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <title>Dashboard</title>
+  </head>
+  <body>
+
+    <div id="preloader"></div>
+
+    <div class="dashboard">
+      <%- include("./partials/header.ejs") %>
+      
+      <div class="main-content">
+        <div class="title">Player's Profile</div>
+        <div class="top-content">
+          <div class="profile-content cont">
+            <div class="header">Profile Overview</div>
+            <ul class="overview-list">
+              <li>
+                <div class="wins"><img src="/assets/trophy.png" alt="">
+                  Wins</div>
+                <span class="wins-value value">-</span>
+              </li>
+              <li>
+                <div class="mastery">Mastery Level</div>
+                <span class="mastery-value value">-</span>
+              </li>
+              <li>
+                <div class="matches">Matches Played</div>
+                <span class="matches-value value">-</span>
+              </li>
+              <li>
+                <div class="top10s">Top10s</div>
+                <span class="top10s-value value">-</span>
+              </li>
+              <li>
+                <div class="losses">Losses</div>
+                <span class="losses-value value">-</span>
+              </li>
+              <li>
+                <div class="platform">Platform</div>
+                <span class="platform-value value">-</span>
+              </li>
+            </ul>
+            <img src="/assets/char1.png" alt="" class="avatar" />
+          </div>
+          <div class="distribution-content cont">
+            <div class="stats">
+              <div class="header">Overall stats</div>
+              <ul class="overview-list">
+                <li>
+                  <div class="kills row"> <img src="/assets/kill.png" alt=""> Kills </div>
+                  <span class="kills-value value">-</span>
+                </li>
+                <li>
+                  <div class="headshots row"> <img src="/assets/Death.png" alt="">Headshots </div>
+                  <span class="headshots-value value">-</span>
+                </li>
+                <li>
+                  <div class="knocks row"> <img src="/assets/knock.png" alt="">Knocks </div>
+                  <span class="knocks-value value">-</span>
+                </li>
+                <li>
+                  <div class="assists row"> <img src="/assets/assist.png" alt="">Assists </div>
+                  <span class="assists-value value">-</span>
+                </li>
+                <li>
+                  <div class="roadkills row"><img src="/assets/Vehicle.png" alt="">Road Kills </div>
+                  <span class="roadkills-value value">-</span>
+                </li>
+                <li>
+                  <div class="revives row"> <img src="/assets/suicide.png" alt="">Revives </div>
+                  <span class="revives-value value">-</span>
+                </li>
+                <li>
+                  <div class="longest row"> <img src="/assets/Headshot.png" alt="">Longest Kill </div>
+                  <span class="longest-value value">-</span>
+                </li>
+                <li>
+                  <div class="dmg row"> <img src="/assets/kill.png" alt="">Avg. Damage </div>
+                  <span class="dmg-value value">-</span>
+                </li>
+            </div>
+            <div class="graph-container">
+              <div class="header">Kills Distribution</div>
+              <canvas id="myChart" width="200" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="mid-content">
+          <div class="last-content cont">
+            <div class="header">Last Match Performance <span class="date">01/01/0001</span> </div>
+            <div class="map-name">Map</div>
+            <div class="content-rows">
+              <div class="top">
+                <div class="placement">Placement <span id="place">-</span> </div>
+                <div class="duration">Duration <span id="duration">-</span> </div>
+              </div>
+              <div class="mode">Game Mode</div>
+              <div class="middle">
+                <div class="left">
+                 
+
+
+                </div>
+                <div class="right">
+                  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="recent-content cont">
+
+            <div class="header">Recent Games Performance</div>
+            <div class="graph-container">
+              <canvas id="pChart" width="600" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bottom-content cont">
+          <div class="header">Top Weapons</div>
+          <div class="grid-container">
+          
+         
+        </div>
+        </div>
+      </div>
+    
+    <%- include("./partials/footer.ejs") %>
+  </body>
+  <script>
+
+    const loader = document.querySelector('#preloader');
+    window.addEventListener('load',()=>{
+      loader.style.display = "none";
+    })
+
+
+    const previousCurrent = document.querySelector('.current');
+    const presentCurrent = document.querySelector('.dashCurrent');
+    previousCurrent.classList.remove('current');
+    presentCurrent.classList.add('current');
+
+
+    const nav_list = document.querySelector(".list-items");
+    const open_icon = document.querySelector(".menu-open");
+    const close_icon = document.querySelector(".menu-close");
+
+    open_icon.addEventListener("click", () => {
+      nav_list.style.left = "85%";
+      open_icon.style.display = "none";
+      close_icon.style.display = "unset";
+    });
+    close_icon.addEventListener("click", () => {
+      nav_list.style.left = "125%";
+      open_icon.style.display = "unset";
+      close_icon.style.display = "none";
+    });
+  </script>
+  <script>
+
+    let data = JSON.parse('<%- JSON.stringify(user) %>');
+    //console.log(data);
+
+    //* OVERVIEW DATA//
+    const avatar = document.querySelector('.avatar');
+    const winsTotal = document.querySelector('.wins-value');
+    const masteryLevel = document.querySelector('.mastery-value');
+    const matchesTotal = document.querySelector('.matches-value');
+    const top10Total = document.querySelector('.top10s-value');
+    const lossesTotal = document.querySelector('.losses-value');
+    const platformValue = document.querySelector('.platform-value');
+    //* Profile Overview Content
+    winsTotal.textContent = data.stats.wins;
+    masteryLevel.textContent = data.overview_data.level;
+    matchesTotal.textContent = data.overview_data.totalmatches;
+    top10Total.textContent = data.overview_data.top10.total;
+    lossesTotal.textContent = data.stats.losses;
+    platform =
+          data.overview_data.platform.charAt(0).toUpperCase() +
+          data.overview_data.platform.slice(1);
+        platformValue.textContent = platform;
+
+    const random = Math.floor(Math.random() * 4)
+    avatar.src = `/assets/char${random}.png`
+    
+    
+    //* -----------------------------
+    
+    //* Overall Stats Content
+    playerName = document.querySelector('.title');
+    killsTotal = document.querySelector('.kills-value');
+    headshotsTotal = document.querySelector('.headshots-value');
+    knocksTotal = document.querySelector('.knocks-value');
+    assistsTotal = document.querySelector('.assists-value');
+    roadkillsTotal = document.querySelector('.roadkills-value');
+    revivesTotal = document.querySelector('.revives-value');
+    lgtsKill = document.querySelector('.longest-value');
+    avgDmg = document.querySelector('.dmg-value');
+
+    playerName.textContent = `${data.overview_data.playernick}'s Profile`;
+
+    killsTotal.textContent = data.stats.kills;
+    headshotsTotal.textContent = data.stats.headshots;
+    knocksTotal.textContent = data.stats.knocks;
+    assistsTotal.textContent = data.stats.assists;
+    roadkillsTotal.textContent = data.stats.roadkills;
+    revivesTotal.textContent = data.stats.revives;
+    lgtsKill.textContent = `${data.stats.longestkill.toFixed(0)}m`;
+    avgDmg.textContent = (
+      data.stats.dmg / data.overview_data.totalmatches
+    ).toFixed(0);
+    //* -----------------------------
+
+    //* Distribution Graph Content
+    const modes = [];
+    const killsinModes = [];
+    let i = 0;
+    data.stats.gameModekills.forEach((item) => {
+      modes.push(item[0]);
+      killsinModes.push(item[1]);
+      i++;
+    });
+    i = 0;
+    killsDistributionGraph(modes, killsinModes);
+    //* -----------------------------
+    
+  function killsDistributionGraph(labels, values){
+    
+  const ctx = document.getElementById('myChart').getContext('2d');
+  
+  const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label:
+            'Kill distribution in different game modes',
+          data: values,
+          backgroundColor: [
+            'rgba(214, 200, 191, 0.8)',
+            'rgba(221, 213, 37, 0.8)',
+            'rgba(204, 37, 221, 0.8)',
+            'rgba(221, 37, 73, .8)',
+            'rgba(59, 221, 37, .8)',
+            'rgba(37, 151, 221, .8)',
+          ],
+          borderColor: 'rgba(255, 255, 255, 1)',
+          borderWidth: 1,
+        },
+        
+      ],
+    }, 
+    options:{
+      plugins:{
+        legend:{
+          labels:{
+            font:{
+              size: '14'
+            },
+            color: 'white',
+          }
+        }
+      }
+    }
+
+  });
+}
+  //* Last Match Content--------------
+
+  lastMapImage = document.querySelector('.last-content');
+
+matchDate = document.querySelector('.date');
+matchPlacement = document.querySelector('#place');
+matchDuration = document.querySelector('#duration');
+matchMode = document.querySelector('.mode');
+matchRoster = document.querySelectorAll('.player');
+matchMap = document.querySelector('.map-name');
+
+playerLeftCol = document.querySelector('.left');
+playerRightCol = document.querySelector('.right');
+
+lastMapImage.style.background = `linear-gradient(rgba(4, 9, 30, 0.4), var(--main-color)),
+url(/assets/mapSelection/${data.lastmatch.matchMap}.png)`;
+lastMapImage.style.backgroundPosition = 'center';
+lastMapImage.style.backgroundSize = 'cover';
+
+matchMap.textContent = data.lastmatch.matchMap;
+matchPlacement.textContent = data.lastmatch.roster[0].placement;
+matchDate.textContent = data.lastmatch.matchDate
+  .replace('T', '/')
+  .replace('Z', '');
+matchDuration.textContent = data.lastmatch.matchDuration;
+matchMode.textContent = (
+  data.lastmatch.matchGameMode.charAt(0).toUpperCase() +
+  data.lastmatch.matchGameMode.slice(1)
+).replace('f', 'F');
+
+const players = data.lastmatch.roster;
+let it = 1;
+players.forEach((player) => {
+
+
+
+  const playerSpot = document.createElement('div');
+  playerSpot.classList.add('player');
+  playerSpot.classList.add(`player${it}`);
+  const playerName = document.createElement('div');
+  playerName.classList.add('player');
+  const playerStats = document.createElement('div');
+  playerStats.classList.add('stats');
+
+  playerNext = document.createElement('a');
+  playerNext.classList.add("nextPlayer")
+  playerNext.addEventListener("click", ()=>{
+    redirect(player.name);
+  })
+
+
+
+  const killSpan = document.createElement('span');
+  killSpan.classList.add('last-kills');
+  const playerKills = document.createElement('div');
+  playerKills.classList.add('kills');
+
+  const dmgSpan = document.createElement('span');
+  dmgSpan.classList.add('last-dmg');
+  const playerDmg = document.createElement('div');
+  playerDmg.classList.add('dmg');
+
+  const knockSpan = document.createElement('span');
+  knockSpan.classList.add('last-knocks');
+  const playerKnocks = document.createElement('div');
+  playerKnocks.classList.add('knocks');
+
+  playerNext.textContent = player.name
+  //playerName.textContent = player.name;
+  playerKills.textContent = 'Kills ';
+  playerDmg.textContent = 'Damage ';
+  playerKnocks.textContent = 'Knocks ';
+  killSpan.textContent = `${player.kills}/`;
+  dmgSpan.textContent = `${player.dmg.toFixed(0)}/`;
+  knockSpan.textContent = player.assists;
+
+  playerName.appendChild(playerNext)
+  playerKills.appendChild(killSpan);
+  playerDmg.appendChild(dmgSpan);
+  playerKnocks.appendChild(knockSpan);
+  playerStats.appendChild(playerKills);
+  playerStats.appendChild(playerDmg);
+  playerStats.appendChild(playerKnocks);
+  playerSpot.appendChild(playerName);
+  playerSpot.appendChild(playerStats);
+  if (it >= 3) {
+    playerRightCol.appendChild(playerSpot);
+  } else {
+    playerLeftCol.appendChild(playerSpot);
+  }
+
+  it++;
+});
+it = 0;
+//* -----------------------------
+
+//* -----------------------Top 10 Weapons ----------------------------------------------------------------
+
+  const container = document.querySelector('.grid-container');
+  data.top10weapons.forEach((weapon) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    cardContent = `
+    <div class="title">${weapon.weapon
+      .replace('Item_Weapon_', '')
+      .replace('_C', '')}</div>
+    <img src="/assets/weapons/${weapon.weapon}.png" alt="">
+  <div class="stats">
+    <div class="stat">
+      <p>Kills</p>
+      <div class="value">${weapon.kills}</div>
+    </div>
+    <div class="stat">
+      <p>Headshots</p>
+      <div class="value">${weapon.headShots}</div>
+    </div>
+    <div class="stat">
+      <p>Level</p>
+      <div class="value">${weapon.level}</div>
+    </div>
+  </div>`;
+    card.innerHTML = cardContent;
+    container.appendChild(card);
+  });
+  //* ----------------------------
+
+  //* ----------------------------Kill Line graph
+  last10GamesData = [];
+  last10DatesData = [];
+
+  const millis = data.recentStats.map((item) => {
+    var myDate = new Date(item.date);
+    last10DatesData.push(item.date.split('T')[0]);
+
+    var result = myDate.getTime();
+    last10GamesData.push({
+      kills: item.kills,
+      millis: result,
+      dmgDone: item.dmgDone,
+      knocks: item.knocks,
+    });
+    return result;
+  });
+  const sortedbyDate = last10GamesData.sort((a, b) => {
+    return b.millis - a.millis;
+  });
+  const last10Kills = sortedbyDate.map((item) => {
+    return item.kills;
+  });
+  const last10Knocks = sortedbyDate.map((item) => {
+    return item.knocks;
+  });
+  const last10DmgDone = sortedbyDate.map((item) => {
+    return item.dmgDone;
+  });
+
+  recentChart(last10Kills, last10Knocks, last10DmgDone, last10DatesData);
+
+  function recentChart(killValue, knocksValue, dmgValue, dates){
+    const ctxx = document.getElementById('pChart').getContext('2d');
+  const myChartx = new Chart(ctxx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label:
+          'Amount of kills in the last 10 games',
+          data: killValue,
+          backgroundColor: 'rgba(255, 212, 0, 0.6)',
+          borderColor: 'rgba(255, 255, 255, 1)',
+          borderWidth: 1,
+          fill: true,
+        },
+      ],
+    },
+    options: {
+      scales:{
+        y:{
+          ticks:{
+            color: 'white'
+          },
+          beginAtZero: true
+        },
+        x:{
+          ticks:{
+            color: 'white'
+          },
+          beginAtZero: true
+        }
+      },
+      legend: {
+        labels:{
+          fontColor: 'white',
+        }
+      },
+      plugins:{
+        legend:{
+          labels:{
+            font:{
+              size: '14'
+            },
+            color: 'white',
+          }
+        }
+      }
+    },
+    
+  });
+}
+//* ----------------------------
+
+function redirect(player){
+  window.location.href = `/users/playerData?platform=${data.overview_data.platform}&playerName=${player}`
+}
+
+
+  </script>
+</html>
