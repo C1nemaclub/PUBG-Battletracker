@@ -406,7 +406,7 @@ router.get('/playerData', async (req, res) => {
         lastmatch: lastMatchData,
         recentStats: recentData[0].value,
       };
-      console.log('Rendering...');
+      console.log('Rendering Page...');
       res.render('dash', { user: mainData });
     } else if (playerId_response.status === 429) {
       res.render('manyRequests', { error: playerId_response.status });
