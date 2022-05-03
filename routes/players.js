@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
   );
 });
 
-router.get('/matches', (req, res) => {
+router.post('/matches', (req, res) => {
   console.log(req.query);
   console.log('Matches request!');
   res.render('matches');
