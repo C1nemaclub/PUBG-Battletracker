@@ -22,8 +22,8 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-const userRouter = require('./routes/users');
-app.use('/users', userRouter);
+const userRouter = require('./routes/players');
+app.use('/players', userRouter);
 
 const infoRouter = require('./routes/info');
 app.use('/info', infoRouter);

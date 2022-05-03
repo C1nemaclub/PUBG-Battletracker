@@ -11,7 +11,7 @@ const database = new Datastore('database.db');
 database.loadDatabase();
 
 router.get('/', (req, res) => {
-  res.send('User Page');
+  res.send('Players Page');
 });
 
 router.post('/', (req, res) => {
@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
   playerPlatform = req.body.platform;
 
   res.redirect(
-    `/users/playerData?platform=${playerPlatform}&playerName=${playerName}`
+    `/players/playerData?platform=${playerPlatform}&playerName=${playerName}`
   );
 });
 
