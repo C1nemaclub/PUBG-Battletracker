@@ -234,11 +234,11 @@ router.get('/playerData', async (req, res) => {
       } else {
         console.log('Cant Gather last match data');
         lastMatchData = {
-          matchDuration: 'matchDuration',
-          matchGameMode: 'matchGameMode',
-          matchMap: 'matchMap',
-          matchDate: 'matchDate',
-          roster: 'rosterInfo',
+          matchDuration: 'Failed',
+          matchGameMode: 'Failed',
+          matchMap: 'Failed',
+          matchDate: 'Failed',
+          roster: 'Failed',
         };
       }
 
@@ -433,7 +433,7 @@ router.get('/playerData', async (req, res) => {
           overview_data: playerOverviewData,
           stats: playerOverallStats,
           lastmatch: lastMatchData,
-          recentStats: 'recentData[0].value',
+          recentStats: 'Failed',
         };
         res.render('dash', { user: mainData });
       }

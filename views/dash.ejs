@@ -118,6 +118,7 @@
           <div class="recent-content cont">
 
             <div class="header">Recent Games Performance</div>
+            <h2 class="failed"></h2>
             <div class="graph-container">
               <canvas id="pChart"></canvas>
             </div>
@@ -167,7 +168,7 @@
   <script>
 
     let data = JSON.parse('<%- JSON.stringify(user) %>');
-    //console.log(data);
+    console.log(data);
 
     //* OVERVIEW DATA//
     const avatar = document.querySelector('.avatar');
@@ -275,16 +276,54 @@
 
   });
 }
+
+//* -----------------------Top 10 Weapons ----------------------------------------------------------------
+
+const container = document.querySelector('.grid-container');
+  data.top10weapons.forEach((weapon) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    cardContent = `
+    <div class="title">${weapon.weapon
+      .replace('Item_Weapon_', '')
+      .replace('_C', '')}</div>
+    <img src="/assets/weapons/${weapon.weapon}.png" alt="">
+  <div class="stats">
+    <div class="stat">
+      <p>Kills</p>
+      <div class="value">${weapon.kills}</div>
+    </div>
+    <div class="stat">
+      <p>Headshots</p>
+      <div class="value">${weapon.headShots}</div>
+    </div>
+    <div class="stat">
+      <p>Level</p>
+      <div class="value">${weapon.level}</div>
+    </div>
+  </div>`;
+    card.innerHTML = cardContent;
+    container.appendChild(card);
+  });
+  //* ----------------------------
+
+
+
   //* Last Match Content--------------
 
-  lastMapImage = document.querySelector('.last-content');
-
+lastMapImage = document.querySelector('.last-content');
 matchDate = document.querySelector('.date');
 matchPlacement = document.querySelector('#place');
 matchDuration = document.querySelector('#duration');
 matchMode = document.querySelector('.mode');
 matchRoster = document.querySelectorAll('.player');
 matchMap = document.querySelector('.map-name');
+
+if(data.lastmatch.roster == "Failed"){
+  matchMode.textContent = `${data.overview_data.playernick} Hasn't played any games recently.`
+} else{
+
+
 
 playerLeftCol = document.querySelector('.left');
 playerRightCol = document.querySelector('.right');
@@ -369,39 +408,15 @@ players.forEach((player) => {
   it++;
 });
 it = 0;
+}
 //* -----------------------------
 
-//* -----------------------Top 10 Weapons ----------------------------------------------------------------
-
-  const container = document.querySelector('.grid-container');
-  data.top10weapons.forEach((weapon) => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    cardContent = `
-    <div class="title">${weapon.weapon
-      .replace('Item_Weapon_', '')
-      .replace('_C', '')}</div>
-    <img src="/assets/weapons/${weapon.weapon}.png" alt="">
-  <div class="stats">
-    <div class="stat">
-      <p>Kills</p>
-      <div class="value">${weapon.kills}</div>
-    </div>
-    <div class="stat">
-      <p>Headshots</p>
-      <div class="value">${weapon.headShots}</div>
-    </div>
-    <div class="stat">
-      <p>Level</p>
-      <div class="value">${weapon.level}</div>
-    </div>
-  </div>`;
-    card.innerHTML = cardContent;
-    container.appendChild(card);
-  });
-  //* ----------------------------
-
   //* ----------------------------Kill Line graph
+
+  if(data.recentStats == "Failed"){
+  const failMsg = document.querySelector('.failed')
+  failMsg.textContent = `${data.overview_data.playernick} Hasn't played any games recently.`
+} else{
   last10GamesData = [];
   last10DatesData = [];
 
@@ -484,6 +499,7 @@ it = 0;
     },
     
   });
+}
 }
 //* ----------------------------
 

@@ -640,6 +640,10 @@ html {
   min-height: 220px;
 }
 
+.main-content .mid-content .failed {
+  color: var(--text-primary);
+}
+
 .main-content .mid-content .cont {
   border-radius: 10px;
 }

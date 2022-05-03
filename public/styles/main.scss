@@ -466,6 +466,9 @@ html {
         }
       }
     }
+    .failed {
+      color: var(--text-primary);
+    }
     .cont {
       border-radius: 10px;
     }
