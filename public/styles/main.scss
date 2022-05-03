@@ -131,10 +131,11 @@ html {
   display: flex;
   height: 60px;
   width: 35%;
+  min-width: 366px;
   margin-bottom: 400px;
-
+  background: var(--secondary-color);
   .input-platform {
-    background: var(--main-color);
+    background: var(--secondary-color);
     color: var(--text-primary);
     text-align: center;
     font-size: 1rem;
@@ -142,7 +143,7 @@ html {
     outline: none;
   }
   .input-box {
-    background: var(--main-color);
+    background: var(--secondary-color);
     color: var(--text-primary);
     width: 70%;
     padding: 10px 20px;
@@ -156,7 +157,8 @@ html {
     position: absolute;
     top: 0;
     right: 0;
-    width: 60px;
+    width: 15%;
+    min-width: 60px;
     height: 100%;
     background: var(--text-secondary);
     z-index: 1;
@@ -364,6 +366,9 @@ html {
           align-items: center;
           justify-content: center;
         }
+        span {
+          color: var(--accent-color);
+        }
       }
     }
     .cont {
@@ -468,6 +473,10 @@ html {
     }
     .failed {
       color: var(--text-primary);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .cont {
       border-radius: 10px;
@@ -867,7 +876,7 @@ html {
           gap: 20px;
           .stats {
             align-self: center;
-            width: 80%;
+            width: 100%;
           }
           .graph-container {
             width: 80%;
@@ -895,6 +904,7 @@ html {
   }
   .search-box {
     margin-bottom: 100px;
+    min-width: 300px;
   }
 
   .about-page {
@@ -910,9 +920,10 @@ html {
       .top-content {
         .profile-content {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           flex-direction: column;
+          height: 250px;
           .overview-list {
             li {
               width: 100%;

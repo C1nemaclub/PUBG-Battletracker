@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <title>Dashboard</title>
+    <link rel="icon" href="/assets/logo.png" type="image/png" />
+    <title>PUBGrabStat Dashboard</title>
   </head>
   <body>
 
@@ -47,7 +48,7 @@
                 <span class="platform-value value">-</span>
               </li>
             </ul>
-            <img src="/assets/char1.png" alt="" class="avatar" />
+            <img src="/assets/char0.png" alt="" class="avatar" />
           </div>
           <div class="distribution-content cont">
             <div class="stats">
@@ -118,7 +119,7 @@
           <div class="recent-content cont">
 
             <div class="header">Recent Games Performance</div>
-            <h2 class="failed"></h2>
+            <p class="failed"></p>
             <div class="graph-container">
               <canvas id="pChart"></canvas>
             </div>
@@ -168,7 +169,7 @@
   <script>
 
     let data = JSON.parse('<%- JSON.stringify(user) %>');
-    console.log(data);
+    //console.log(data);
 
     //* OVERVIEW DATA//
     const avatar = document.querySelector('.avatar');
@@ -189,7 +190,7 @@
           data.overview_data.platform.slice(1);
         platformValue.textContent = platform;
 
-    const random = Math.floor(Math.random() * 4)
+    const random = Math.floor(Math.random() * 2)
     avatar.src = `/assets/char${random}.png`
     
     

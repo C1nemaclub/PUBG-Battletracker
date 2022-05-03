@@ -160,11 +160,13 @@ html {
   display: flex;
   height: 60px;
   width: 35%;
+  min-width: 366px;
   margin-bottom: 400px;
+  background: var(--secondary-color);
 }
 
 .search-box .input-platform {
-  background: var(--main-color);
+  background: var(--secondary-color);
   color: var(--text-primary);
   text-align: center;
   font-size: 1rem;
@@ -173,7 +175,7 @@ html {
 }
 
 .search-box .input-box {
-  background: var(--main-color);
+  background: var(--secondary-color);
   color: var(--text-primary);
   width: 70%;
   padding: 10px 20px;
@@ -187,7 +189,8 @@ html {
   position: absolute;
   top: 0;
   right: 0;
-  width: 60px;
+  width: 15%;
+  min-width: 60px;
   height: 100%;
   background: var(--text-secondary);
   z-index: 1;
@@ -497,6 +500,10 @@ html {
           justify-content: center;
 }
 
+.main-content .top-content .distribution-content .stats span {
+  color: var(--accent-color);
+}
+
 .main-content .top-content .cont {
   border-radius: 10px;
 }
@@ -642,6 +649,11 @@ html {
 
 .main-content .mid-content .failed {
   color: var(--text-primary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .main-content .mid-content .cont {
@@ -1137,7 +1149,7 @@ html {
     -ms-flex-item-align: center;
         -ms-grid-row-align: center;
         align-self: center;
-    width: 80%;
+    width: 100%;
   }
   .dashboard .main-content .top-content .distribution-content .graph-container {
     width: 80%;
@@ -1158,6 +1170,7 @@ html {
   }
   .search-box {
     margin-bottom: 100px;
+    min-width: 300px;
   }
   .about-page .content-section {
     width: 80%;
@@ -1169,9 +1182,9 @@ html {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
@@ -1179,6 +1192,7 @@ html {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    height: 250px;
   }
   .dashboard .main-content .top-content .profile-content .overview-list li {
     width: 100%;
