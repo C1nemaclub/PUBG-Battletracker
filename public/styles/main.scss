@@ -68,7 +68,6 @@ html {
     display: flex;
     gap: 20px;
     position: relative;
-
     .current::after {
       content: ' ';
       position: absolute;
@@ -303,6 +302,11 @@ html {
       background: var(--accent-color);
     }
 
+    .matches-tab {
+      background: transparent;
+      border: 0px;
+      color: #cccccc;
+    }
     .soon {
       font-size: 0.7rem;
       color: #ccc;

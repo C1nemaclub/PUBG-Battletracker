@@ -12,14 +12,18 @@
   <body>
 
     <div id="preloader"></div>
-
-    
     <div class="dashboard">
       <%- include("./partials/header.ejs") %>
       <div class="main-content">
         <div class="tabs">
           <div class="tab active">Profile</div>
-          <div class="tab">Matches <span class="soon">(soon)</span> </div>
+          <form action="/players/matches">
+            <input type="hidden" name="name" value="<%- user.overview_data.playernick %>">
+            <input type="hidden" name="platform" value="<%- user.overview_data.platform %>">
+            <button type="submit" name="" class="tab matches-tab" disabled>Matches<span class="soon">(soon)</span> </button>
+          </form>
+
+          <!--<div class="tab">Matches <span class="soon">(soon)</span> </div> -->
         </div>
         <div class="title">Player's Profile</div>
         <div class="top-content">

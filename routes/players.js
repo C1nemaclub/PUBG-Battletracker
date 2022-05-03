@@ -23,6 +23,12 @@ router.post('/', (req, res) => {
   );
 });
 
+router.get('/matches', (req, res) => {
+  console.log(req.query);
+  console.log('Matches request!');
+  res.render('matches');
+});
+
 router.get('/playerData', async (req, res) => {
   console.log('Request...');
 

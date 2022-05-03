@@ -387,6 +387,12 @@ html {
   background: var(--accent-color);
 }
 
+.main-content .tabs .matches-tab {
+  background: transparent;
+  border: 0px;
+  color: #cccccc;
+}
+
 .main-content .tabs .soon {
   font-size: 0.7rem;
   color: #ccc;
