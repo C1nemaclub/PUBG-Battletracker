@@ -612,7 +612,8 @@ html {
 
 //* -------------------- ABOUT PAGE --------------------
 
-.about-page {
+.about-page,
+.thankyou-page {
   position: relative;
   overflow-x: hidden;
   width: 100%;
@@ -633,6 +634,11 @@ html {
     font-size: 1.4em;
     margin-bottom: 15px;
     align-self: flex-start;
+  }
+  .ty-sub-header {
+    color: var(--text-primary);
+    font-size: 1.4em;
+    margin-bottom: 15px;
   }
   .message {
     color: var(--text-primary);
@@ -750,12 +756,12 @@ html {
         top: 50%;
         left: 125%;
       }
-      .logo {
-        width: 110px;
-      }
     }
   }
   .nav-bar {
+    .logo {
+      width: 110px;
+    }
     .menu-open {
       color: white;
       font-size: 2rem;

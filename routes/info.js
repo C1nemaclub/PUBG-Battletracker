@@ -3,6 +3,10 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+router.use('/thankyou', (req, res) => {
+  res.render('thankyou');
+});
+
 router.use('/contact', (req, res) => {
   res.render('contact');
 });

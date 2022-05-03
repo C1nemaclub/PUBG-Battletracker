@@ -844,7 +844,8 @@ html {
   color: black;
 }
 
-.about-page {
+.about-page,
+.thankyou-page {
   position: relative;
   overflow-x: hidden;
   width: 100%;
@@ -865,14 +866,16 @@ html {
   background: var(--main-color);
 }
 
-.about-page .header {
+.about-page .header,
+.thankyou-page .header {
   color: var(--accent-color);
   font-size: 2.2em;
   margin: 50px 0;
   font-weight: bold;
 }
 
-.about-page .sub-header {
+.about-page .sub-header,
+.thankyou-page .sub-header {
   color: var(--text-primary);
   font-size: 1.4em;
   margin-bottom: 15px;
@@ -880,20 +883,31 @@ html {
       align-self: flex-start;
 }
 
-.about-page .message {
+.about-page .ty-sub-header,
+.thankyou-page .ty-sub-header {
+  color: var(--text-primary);
+  font-size: 1.4em;
+  margin-bottom: 15px;
+}
+
+.about-page .message,
+.thankyou-page .message {
   color: var(--text-primary);
   font-size: 1.2rem;
 }
 
-.about-page .message a {
+.about-page .message a,
+.thankyou-page .message a {
   text-decoration: none;
 }
 
-.about-page .message a span {
+.about-page .message a span,
+.thankyou-page .message a span {
   color: var(--accent-color);
 }
 
-.about-page .content-section {
+.about-page .content-section,
+.thankyou-page .content-section {
   width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1006,7 +1020,7 @@ html {
     top: 50%;
     left: 125%;
   }
-  .main-index .nav-bar .logo {
+  .nav-bar .logo {
     width: 110px;
   }
   .nav-bar .menu-open {

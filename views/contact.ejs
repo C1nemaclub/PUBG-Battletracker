@@ -22,33 +22,47 @@
 
       <div class="header">CONTACT US</div>
       <div class="content-section">
-        <form action="/info" class="contact" method="POST">
+        <!-----------Change form action to /info  to use ethereal-------------->
+        <form
+          action="https://formsubmit.co/8196930f51502d706eec1b7565ee485c"
+          class="contact"
+          method="POST"
+        >
           <input
             name="sender"
             type="name"
             class="contact-name cta"
             placeholder="Enter Name"
+            required
           />
           <input
             name="email"
             type="email"
             class="contact-email cta"
             placeholder="Enter Email"
+            required
           />
           <input
-            name="subject"
+            name="_subject"
             type="text"
             class="contact-subject cta"
             placeholder="Enter Subject"
+            required
           />
           <textarea
-            name="messagge"
+            name="message"
             id=""
             cols="30"
             rows="8"
             class="contact-message cta"
             placeholder="Enter Message"
+            required
           ></textarea>
+          <input
+            type="hidden"
+            name="_next"
+            value="http://localhost:3000/info/thankyou"
+          />
           <button class="contact-button cta" type="submit">Submit</button>
         </form>
       </div>
@@ -64,7 +78,6 @@
               ><i class="fa-brands fa-instagram"></i
             ></a>
           </div>
-          <p class="email">santiagov801@gmail.com</p>
           <p class="autor">Made by Santiago Velasquez(Cinemaclub)</p>
         </div>
       </div>
