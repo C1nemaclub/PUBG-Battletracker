@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <link rel="icon" href="/assets/logo.png" type="image/png" />
-    <title>PUBGrabStat Dashboard</title>
+    <title><%- user.overview_data.playernick %>'s Dashboard</title>
   </head>
   <body>
 
     <div id="preloader"></div>
 
+    
     <div class="dashboard">
       <%- include("./partials/header.ejs") %>
-      
       <div class="main-content">
         <div class="title">Player's Profile</div>
         <div class="top-content">
@@ -251,7 +251,7 @@
           backgroundColor: [
             'rgba(214, 200, 191, 0.8)',
             'rgba(221, 213, 37, 0.8)',
-            'rgba(204, 37, 221, 0.8)',
+            'rgba(37, 37, 221, 0.8)',
             'rgba(221, 37, 73, .8)',
             'rgba(59, 221, 37, .8)',
             'rgba(37, 151, 221, .8)',

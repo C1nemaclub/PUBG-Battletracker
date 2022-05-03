@@ -19,7 +19,7 @@ html {
 }
 
 #preloader {
-  background: #000 url('../assets/loader.gif') no-repeat center center;
+  background: #000 url('../assets/loader2.gif') no-repeat center center;
   background-size: 15%;
   height: 100vh;
   width: 100%;
@@ -99,7 +99,7 @@ html {
       background: rgb(198, 194, 207);
       width: 0%;
       height: 3px;
-      transition: 0.3s linear;
+      transition: 0.2s linear;
     }
   }
 }
@@ -639,6 +639,7 @@ html {
     color: var(--text-primary);
     font-size: 1.4em;
     margin-bottom: 15px;
+    text-align: center;
   }
   .message {
     color: var(--text-primary);
