@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="icon" href="/assets/logo.png" type="image/png" />
+
+    <script
+      src="https://kit.fontawesome.com/b109f342ec.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>PUBGrabStat About</title>
+  </head>
+  <body>
+    <div id="preloader"></div>
+
+    <div class="thankyou-page">
+      <%- include("./partials/header.ejs") %>
+
+      <div class="content-section">
+        <div class="header">THANK YOU</div>
+        <div class="ty-sub-header">Your email was successfully sent!</div>
+      </div>
+      <div class="footer">
+        <div class="about-section">
+          <p class="title"><a href="/info/about">About US</a></p>
+          <p class="message">Find out more about us.</p>
+          <div class="social-media">
+            <a href="https://github.com/C1nemaclub"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="https://www.instagram.com/santiagovm18/"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+          </div>
+          <p class="autor">Made by Santiago Velasquez(Cinemaclub)</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const loader = document.querySelector('#preloader');
+      window.addEventListener('load', () => {
+        loader.style.display = 'none';
+      });
+
+      const previousCurrent = document.querySelector('.current');
+      const presentCurrent = document.querySelector('.aboutCurrent');
+      previousCurrent.classList.remove('current');
+
+      const nav_list = document.querySelector('.list-items');
+      const open_icon = document.querySelector('.menu-open');
+      const close_icon = document.querySelector('.menu-close');
+
+      open_icon.addEventListener('click', () => {
+        nav_list.style.left = '85%';
+        open_icon.style.display = 'none';
+        close_icon.style.display = 'unset';
+      });
+      close_icon.addEventListener('click', () => {
+        nav_list.style.left = '125%';
+        open_icon.style.display = 'unset';
+        close_icon.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
