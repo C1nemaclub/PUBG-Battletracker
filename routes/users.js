@@ -49,12 +49,16 @@ router.get('/playerData', async (req, res) => {
       };
       playerData.timestamp = timestamp;
       database.insert(playerData);
-
+      let lastMatchId;
       const playerId_data = await playerId_response.json();
       const playerId = playerId_data.data[0].id;
-      const lastMatchId =
-        playerId_data.data[0].relationships.matches.data[0].id;
+      try {
+        lastMatchId = playerId_data.data[0].relationships.matches.data[0].id;
+      } catch (e) {}
 
+      if (!lastMatchId) {
+        console.log('No last match found');
+      }
       const match_url = `https://api.pubg.com/shards/${playerPlatform}/matches/${lastMatchId}`;
       const match_response = await fetch(match_url, options);
       const match_data = await match_response.json();
@@ -107,71 +111,76 @@ router.get('/playerData', async (req, res) => {
       const recentData = await allPromises;
 
       //*----------------------------------------------------------------
-      const datos = match_data.included;
+      console.log(match_response.status);
 
-      var rosterNames = [];
-      var rosterIds = [];
-      var rosterInfo = [];
-      var rosterKills = [];
-      var rosterAssists = [];
-      var rosterDmgDealt = [];
-      var rosterPlacement = [];
+      if (match_response.status === 200) {
+        const datos = match_data.included;
 
-      var target_id;
-      //! Evaluate every player type that matches participant and get its ID if it matches the Main Player's roster ID;
-      datos.forEach((player) => {
-        if (player.type == 'participant') {
-          if (player.attributes.stats.name == playerName) {
-            target_id = player.id;
+        var rosterNames = [];
+        var rosterIds = [];
+        var rosterInfo = [];
+        var rosterKills = [];
+        var rosterAssists = [];
+        var rosterDmgDealt = [];
+        var rosterPlacement = [];
+
+        var target_id;
+        //! Evaluate every player type that matches participant and get its ID if it matches the Main Player's roster ID;
+        datos.forEach((player) => {
+          if (player.type == 'participant') {
+            if (player.attributes.stats.name == playerName) {
+              target_id = player.id;
+            }
           }
-        }
-      });
+        });
 
-      //! Evaluate every player type that matches roster then make an array of IDS for every player
-      //! in the roster and compare if atleast one of the ID matches the target_id and push the correct roster ids to an array.
-      datos.forEach((player) => {
-        if (player.type == 'roster') {
-          const participants_id = player.relationships.participants.data;
-          participants_id.forEach((id) => {
-            if (id.id == target_id) {
-              participants_id.forEach((player) => {
-                rosterIds.push(player.id);
-              });
+        //! Evaluate every player type that matches roster then make an array of IDS for every player
+        //! in the roster and compare if atleast one of the ID matches the target_id and push the correct roster ids to an array.
+        datos.forEach((player) => {
+          if (player.type == 'roster') {
+            const participants_id = player.relationships.participants.data;
+            participants_id.forEach((id) => {
+              if (id.id == target_id) {
+                participants_id.forEach((player) => {
+                  rosterIds.push(player.id);
+                });
+              }
+            });
+          }
+        });
+
+        //! Compare the roster IDS to all of the participants ID and if they  match
+        //! push the right roster data to player data to the arrays.
+        rosterIds.forEach((id) => {
+          datos.forEach((player) => {
+            if (player.type == 'participant' && player.id == id) {
+              participantName = player.attributes.stats.name;
+              rosterNames.push(participantName);
+              rosterKills.push(player.attributes.stats.kills);
+              rosterAssists.push(player.attributes.stats.assists);
+              rosterPlacement.push(player.attributes.stats.winPlace);
+              rosterDmgDealt.push(player.attributes.stats.damageDealt);
             }
           });
-        }
-      });
-
-      //! Compare the roster IDS to all of the participants ID and if they  match
-      //! push the right roster data to player data to the arrays.
-      rosterIds.forEach((id) => {
-        datos.forEach((player) => {
-          if (player.type == 'participant' && player.id == id) {
-            participantName = player.attributes.stats.name;
-            rosterNames.push(participantName);
-            rosterKills.push(player.attributes.stats.kills);
-            rosterAssists.push(player.attributes.stats.assists);
-            rosterPlacement.push(player.attributes.stats.winPlace);
-            rosterDmgDealt.push(player.attributes.stats.damageDealt);
-          }
         });
-      });
 
-      //! push every item in the arrays to an object.
-      let i = 0;
-      rosterNames.forEach((player) => {
-        rosterInfo.push({
-          name: player,
-          id: rosterIds[i],
-          kills: rosterKills[i],
-          assists: rosterAssists[i],
-          placement: rosterPlacement[i],
-          dmg: rosterDmgDealt[i],
+        //! push every item in the arrays to an object.
+        let i = 0;
+        rosterNames.forEach((player) => {
+          rosterInfo.push({
+            name: player,
+            id: rosterIds[i],
+            kills: rosterKills[i],
+            assists: rosterAssists[i],
+            placement: rosterPlacement[i],
+            dmg: rosterDmgDealt[i],
+          });
+          i++;
         });
-        i++;
-      });
-      i = 0;
-
+        i = 0;
+      } else {
+        console.log('Match data not found');
+      }
       //* ----------------Getting Last Match Data----------------------------
 
       function gatherLastMatchData() {
@@ -220,8 +229,18 @@ router.get('/playerData', async (req, res) => {
           roster: rosterInfo,
         };
       }
-
-      gatherLastMatchData();
+      if (match_response.status == 200) {
+        gatherLastMatchData();
+      } else {
+        console.log('Cant Gather last match data');
+        lastMatchData = {
+          matchDuration: 'matchDuration',
+          matchGameMode: 'matchGameMode',
+          matchMap: 'matchMap',
+          matchDate: 'matchDate',
+          roster: 'rosterInfo',
+        };
+      }
 
       //* ----------------Getting Player Lifetime Data---------------------------------
 
@@ -399,20 +418,32 @@ router.get('/playerData', async (req, res) => {
       playerWeaponStats();
       best10Weapons = playerWeaponStats();
 
-      let mainData = {
-        top10weapons: best10Weapons,
-        overview_data: playerOverviewData,
-        stats: playerOverallStats,
-        lastmatch: lastMatchData,
-        recentStats: recentData[0].value,
-      };
+      if (recentData.length > 0) {
+        let mainData = {
+          top10weapons: best10Weapons,
+          overview_data: playerOverviewData,
+          stats: playerOverallStats,
+          lastmatch: lastMatchData,
+          recentStats: recentData[0].value,
+        };
+        res.render('dash', { user: mainData });
+      } else {
+        let mainData = {
+          top10weapons: best10Weapons,
+          overview_data: playerOverviewData,
+          stats: playerOverallStats,
+          lastmatch: lastMatchData,
+          recentStats: 'recentData[0].value',
+        };
+        res.render('dash', { user: mainData });
+      }
       console.log('Rendering Page...');
-      res.render('dash', { user: mainData });
     } else if (playerId_response.status === 429) {
       res.render('manyRequests', { error: playerId_response.status });
     } else if (
       playerId_response.status === 400 ||
-      playerId_response.status === 404
+      playerId_response.status === 404 ||
+      playerId_response.status === 401
     ) {
       res.render('notfound', { error: playerId_response.status });
     }

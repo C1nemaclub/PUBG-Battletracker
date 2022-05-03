@@ -130,7 +130,7 @@ html {
   position: relative;
   display: flex;
   height: 60px;
-  width: 480px;
+  width: 35%;
   margin-bottom: 400px;
 
   .input-platform {
@@ -144,7 +144,7 @@ html {
   .input-box {
     background: var(--main-color);
     color: var(--text-primary);
-    width: 350px;
+    width: 70%;
     padding: 10px 20px;
     font-size: 1.2rem;
     outline: none;
@@ -300,6 +300,7 @@ html {
 
       .overview-list {
         list-style-type: none;
+        width: 100%;
         img {
           width: 30px;
           margin-right: 10px;
@@ -413,11 +414,11 @@ html {
           padding: 0;
           a {
             text-decoration: none;
-            color: var(--text-primary);
+            color: var(--accent-color);
+            font-weight: bold;
             cursor: pointer;
             &:hover {
-              color: var(--accent-color);
-              font-weight: bold;
+              transform: scale(1.5);
             }
           }
           .player1,
@@ -450,12 +451,19 @@ html {
       padding: 20px 20px;
       .graph-container {
         width: 100%;
-        min-width: 400px;
+        min-width: 300px;
+        max-width: 662px;
+        min-height: 220px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 100%;
+        #pChart {
+          width: 100%;
+          min-width: 300px;
+          max-width: 662px;
+          min-height: 220px;
+        }
       }
     }
     .cont {
@@ -472,8 +480,6 @@ html {
   }
   .grid-container {
     align-self: center;
-
-    //height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -732,6 +738,9 @@ html {
         top: 50%;
         left: 125%;
       }
+      .logo {
+        width: 110px;
+      }
     }
   }
   .nav-bar {
@@ -870,6 +879,49 @@ html {
       width: 80%;
       .cta {
         min-width: 280px;
+      }
+    }
+  }
+}
+@media (max-width: 650px) {
+  .hero {
+    h1 {
+      margin-top: 0;
+      font-size: 2.4rem;
+    }
+  }
+  .search-box {
+    margin-bottom: 100px;
+  }
+
+  .about-page {
+    .content-section {
+      width: 80%;
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .dashboard {
+    .main-content {
+      .top-content {
+        .profile-content {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          .overview-list {
+            li {
+              width: 100%;
+            }
+          }
+          .header {
+            align-self: flex-start;
+          }
+          .avatar {
+            display: none;
+          }
+        }
       }
     }
   }
