@@ -111,10 +111,9 @@ html {
 .nav-bar .list-items li::after {
   content: ' ';
   position: absolute;
-  top: 105%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  left: 0%;
+  top: 100%;
+  width: 0%;
   background: #c6c2cf;
   width: 0%;
   height: 3px;
@@ -341,6 +340,56 @@ html {
   width: 80%;
   margin: auto;
   padding: 10px;
+}
+
+.main-content .tabs {
+  width: 20%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20px;
+  padding: 5px;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.main-content .tabs .tab {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  position: relative;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.main-content .tabs .tab::after {
+  content: '';
+  position: absolute;
+  left: 0%;
+  top: 100%;
+  width: 0%;
+  height: 2px;
+  background: white;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.main-content .tabs .active::after {
+  content: '';
+  position: absolute;
+  left: 0%;
+  top: 100%;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+.main-content .tabs .soon {
+  font-size: 0.7rem;
+  color: #ccc;
 }
 
 .main-content .header {
@@ -1070,6 +1119,11 @@ html {
   }
   .dashboard .main-content {
     width: 100%;
+  }
+  .dashboard .main-content .tabs {
+    margin: auto;
+    width: 80%;
+    justify-self: flex-start;
   }
   .dashboard .main-content .title {
     width: 75%;

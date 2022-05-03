@@ -17,6 +17,10 @@
     <div class="dashboard">
       <%- include("./partials/header.ejs") %>
       <div class="main-content">
+        <div class="tabs">
+          <div class="tab active">Profile</div>
+          <div class="tab">Matches <span class="soon">(soon)</span> </div>
+        </div>
         <div class="title">Player's Profile</div>
         <div class="top-content">
           <div class="profile-content cont">
@@ -144,12 +148,12 @@
       loader.style.display = "none";
     })
 
-
-    const previousCurrent = document.querySelector('.current');
+    /*
     const presentCurrent = document.querySelector('.dashCurrent');
-    previousCurrent.classList.remove('current');
     presentCurrent.classList.add('current');
-
+    */
+   const previousCurrent = document.querySelector('.current');
+   previousCurrent.classList.remove('current');
 
     const nav_list = document.querySelector(".list-items");
     const open_icon = document.querySelector(".menu-open");
@@ -505,7 +509,7 @@ it = 0;
 //* ----------------------------
 
 function redirect(player){
-  window.location.href = `/users/playerData?platform=${data.overview_data.platform}&playerName=${player}`
+  window.location.href = `/players/playerData?platform=${data.overview_data.platform}&playerName=${player}`
 }
 
 

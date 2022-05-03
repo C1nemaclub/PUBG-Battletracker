@@ -93,9 +93,9 @@ html {
     li::after {
       content: ' ';
       position: absolute;
-      top: 105%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      left: 0%;
+      top: 100%;
+      width: 0%;
       background: rgb(198, 194, 207);
       width: 0%;
       height: 3px;
@@ -264,6 +264,50 @@ html {
   flex-direction: column;
   width: 80%;
   margin: auto;
+  .tabs {
+    width: 20%;
+    position: relative;
+    display: flex;
+    margin-bottom: 20px;
+    padding: 5px;
+    align-self: flex-start;
+    .tab {
+      align-self: flex-start;
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      position: relative;
+      padding: 5px 10px;
+      margin: 0 5px;
+      cursor: pointer;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0%;
+        top: 100%;
+        width: 0%;
+        height: 2px;
+        background: rgb(255, 255, 255);
+        transition: 0.3s ease-in-out;
+      }
+      &:hover::after {
+        // width: 100%;
+      }
+    }
+    .active::after {
+      content: '';
+      position: absolute;
+      left: 0%;
+      top: 100%;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-color);
+    }
+
+    .soon {
+      font-size: 0.7rem;
+      color: #ccc;
+    }
+  }
 
   .header {
     color: var(--accent-color);
@@ -808,7 +852,11 @@ html {
   .dashboard {
     .main-content {
       width: 100%;
-
+      .tabs {
+        margin: auto;
+        width: 80%;
+        justify-self: flex-start;
+      }
       .title {
         width: 75%;
         margin: auto;
