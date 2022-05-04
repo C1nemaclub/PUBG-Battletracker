@@ -337,8 +337,8 @@ if(data.lastmatch.roster == "Failed"){
 playerLeftCol = document.querySelector('.left');
 playerRightCol = document.querySelector('.right');
 
-lastMapImage.style.background = `linear-gradient(rgba(4, 9, 30, 0.4), var(--main-color)),
-url(/assets/mapSelection/${data.lastmatch.matchMap}.png)`;
+lastMapImage.style.backgroundImage = `linear-gradient(rgba(4, 9, 30, 0.4), var(--main-color)),
+url('/assets/mapSelection/${data.lastmatch.matchMap}.png')`;
 lastMapImage.style.backgroundPosition = 'center';
 lastMapImage.style.backgroundSize = 'cover';
 
