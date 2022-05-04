@@ -196,11 +196,11 @@ router.get('/playerData', async (req, res) => {
           'Miramar',
           'Vikendi',
           'Erangel',
-          'Haven',
+          'haven',
           'Camp Jackal',
           'Sanhok',
           'Karakin',
-          'Taego',
+          'taego',
         ];
         const mapsKey = [
           'Baltic_Main',
