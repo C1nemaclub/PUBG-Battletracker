@@ -17,7 +17,7 @@ If you dont play or have a PUBG account but you want to try it out you can searc
 
 **Details**
 
-This project was made using node.js for the server side togehter with the express.js framework and some other minor libraries, it also uses the nedb.js lightweight database library and ejs as a view engine.
+Fullstack application made using node.js for the server side togehter with the express.js framework and some other minor libraries, it also uses the nedb.js lightweight database library and ejs as a view engine.
 
 **Features**
 
