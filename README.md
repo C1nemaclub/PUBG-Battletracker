@@ -36,4 +36,6 @@ This project was made using node.js for the server side togehter with the expres
 
 
 **To add**
-* Matches tab in the dashboard
+* Development of the Matches tab in the dashboard
+* A better Readme.
+* More comments in the code
