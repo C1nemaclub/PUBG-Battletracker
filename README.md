@@ -1,6 +1,20 @@
 # PUBG-Battletracker
 This project uses the oficial PUBG API to retrieve and show player data in a good manner by simply entering your PUBG in-game name.
 
+**Live preview of the current version**
+https://pubg-battletracker.herokuapp.com/
+
+Keep in mind the PUBG API Key that was provided to me has only a RPM limit of 10, each time you search for a player it uses 4 of them, so if you get a 429 error, give it a minute and try again!
+
+If you dont play or have a PUBG account but you want to try it out you can search some of the names below
+* C1nemaclub
+* LittleBigWhale
+* TGLTN
+* DanucD
+* djalice
+
+*The site is caps sensitive!*
+
 **Details**
 
 This project was made using node.js for the server side togehter with the express.js framework and some other minor libraries, it also uses the nedb.js lightweight database library and ejs as a view engine.
