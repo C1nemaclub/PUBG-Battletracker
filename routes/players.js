@@ -255,7 +255,7 @@ router.get('/playerData', async (req, res) => {
         const matchGameMode = matchAttributtes.gameMode;
         let matchMap = matchAttributtes.mapName;
         const matchDate = matchAttributtes.createdAt;
-
+        const matchId = match_data.data.id;
         mapsKey.forEach((map) => {
           if (matchMap == map) {
             matchMap = maps[mapsKey.indexOf(map)];
@@ -268,6 +268,7 @@ router.get('/playerData', async (req, res) => {
           matchMap: matchMap,
           matchDate: matchDate,
           roster: rosterInfo,
+          matchId: matchId,
         };
       }
       if (match_response.status == 200) {

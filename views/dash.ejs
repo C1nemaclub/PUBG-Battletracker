@@ -102,7 +102,7 @@
           </div>
         </div>
         <div class="mid-content">
-          <div class="last-content cont">
+          <div class="last-content cont" onclick="getMatch()">
             <div class="header">Last Match Performance <span class="date">01/01/0001</span> </div>
             <div class="map-name">Map</div>
             <div class="content-rows">
@@ -524,7 +524,10 @@ it = 0;
 }
 //* ----------------------------
 
-
+function getMatch(){
+  const id = data.lastmatch.matchId;
+  window.location.href = `/matches?matchId=${id}&playerName=${data.overview_data.playernick}&platform=${data.overview_data.platform}`;
+}
 
 function passData(){
   window.location.href = `/players/matches?platform=${data.overview_data.platform}&playerName=${data.overview_data.playernick}`
