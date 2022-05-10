@@ -32,7 +32,8 @@ html {
 .main-index,
 .contact-page,
 .error-section,
-.about-page {
+.about-page,
+.matches-index {
   min-height: 100vh;
   width: 100%;
   background: var(--main-color);
@@ -62,6 +63,7 @@ html {
       -ms-flex-align: center;
           align-items: center;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .nav-bar .menu-open,
@@ -70,7 +72,8 @@ html {
 }
 
 .nav-bar .logo {
-  width: 150px;
+  width: 110px;
+  margin-top: 35px;
 }
 
 .nav-bar .list-items {
@@ -390,12 +393,7 @@ html {
 .main-content .tabs .matches-tab {
   background: transparent;
   border: 0px;
-  color: #cccccc;
-}
-
-.main-content .tabs .soon {
-  font-size: 0.7rem;
-  color: #ccc;
+  color: var(--text-primary);
 }
 
 .main-content .header {
@@ -403,6 +401,147 @@ html {
   font-size: 1.3rem;
   margin-bottom: 20px;
   font-weight: bold;
+}
+
+.main-content .match-content .toHide {
+  display: none;
+}
+
+.main-content .match-content .header {
+  margin-bottom: 0;
+}
+
+.main-content .match-content .match-list {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 20px;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.main-content .match-content .match-list .header {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  background: #2e1e5d;
+  padding: 10px;
+}
+
+.main-content .match-content .match-list .header .item {
+  width: 16%;
+}
+
+.main-content .match-content .match-list .match-item {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  background: #2e1e5d;
+}
+
+.main-content .match-content .match-list .match-item .item {
+  width: 16%;
+  padding: 10px;
+}
+
+.main-content .specific-match-content {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+.main-content .specific-match-content .item {
+  width: 25%;
+}
+
+.main-content .specific-match-content .playerdata {
+  width: 50%;
+  padding: 10px;
+  font-size: 1.2rem;
+  height: 100%;
+}
+
+.main-content .specific-match-content .playerlist {
+  width: 50%;
+  padding: 10px;
+  font-size: 1.2rem;
+  height: 100%;
+}
+
+.main-content .specific-match-content .data-list {
+  list-style-type: none;
+  color: var(--text-primary);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.main-content .specific-match-content .data-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main-content .specific-match-content .data-list .header {
+  -webkit-box-ordinal-group: -1;
+      -ms-flex-order: -2;
+          order: -2;
+}
+
+.main-content .specific-match-content .data-list .list-item {
+  background: var(--secondary-color);
+  padding: 10px;
+}
+
+.main-content .specific-match-content .data-list .activePlayer {
+  background: rgba(253, 234, 71, 0.4);
+  -webkit-box-ordinal-group: 0;
+      -ms-flex-order: -1;
+          order: -1;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.main-content .specific-match-content .data-list .fa-robot {
+  color: var(--accent-color);
+}
+
+.main-content .specific-match-content .data-list .icon {
+  width: 5%;
 }
 
 .main-content .title {
@@ -577,8 +716,8 @@ html {
 .main-content .mid-content .last-content {
   width: 40%;
   height: 100%;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(4, 9, 30, 0.4)), to(var(--main-color))), url("../assets/mapSelection/Sanhok.png");
-  background: linear-gradient(rgba(4, 9, 30, 0.4), var(--main-color)), url("../assets/mapSelection/Sanhok.png");
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(4, 9, 30, 0.4)), to(var(--main-color))), url("");
+  background: linear-gradient(rgba(4, 9, 30, 0.4), var(--main-color)), url("");
   background-size: cover;
   background-position: center;
   padding: 20px;
@@ -1077,7 +1216,7 @@ html {
     left: 125%;
   }
   .nav-bar .logo {
-    width: 110px;
+    width: 85px;
   }
   .nav-bar .menu-open {
     color: white;

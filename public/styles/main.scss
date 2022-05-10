@@ -31,7 +31,8 @@ html {
 .main-index,
 .contact-page,
 .error-section,
-.about-page {
+.about-page,
+.matches-index {
   min-height: 100vh;
   width: 100%;
   background: var(--main-color);
@@ -55,13 +56,15 @@ html {
   justify-content: space-between;
   align-items: center;
   padding: 0;
+  margin-bottom: 20px;
   .menu-open,
   .menu-close {
     display: none;
   }
 
   .logo {
-    width: 150px;
+    width: 110px;
+    margin-top: 35px;
   }
   .list-items {
     list-style-type: none;
@@ -305,11 +308,7 @@ html {
     .matches-tab {
       background: transparent;
       border: 0px;
-      color: #cccccc;
-    }
-    .soon {
-      font-size: 0.7rem;
-      color: #ccc;
+      color: var(--text-primary);
     }
   }
 
@@ -320,6 +319,100 @@ html {
     font-weight: bold;
   }
 
+  .match-content {
+    .toHide {
+      display: none;
+    }
+    .header {
+      margin-bottom: 0;
+    }
+    .match-list {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      padding: 20px;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      .header {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 100%;
+        background: #2e1e5d;
+        padding: 10px;
+        .item {
+          width: 16%;
+        }
+      }
+      .match-item {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 100%;
+        cursor: pointer;
+        background: #2e1e5d;
+        .item {
+          width: 16%;
+          padding: 10px;
+        }
+      }
+    }
+  }
+  .specific-match-content {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    .item {
+      width: 25%;
+    }
+
+    .playerdata {
+      width: 50%;
+      padding: 10px;
+      font-size: 1.2rem;
+      height: 100%;
+    }
+    .playerlist {
+      width: 50%;
+      padding: 10px;
+      font-size: 1.2rem;
+      height: 100%;
+    }
+    .data-list {
+      list-style-type: none;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      li {
+        display: flex;
+        justify-content: space-between;
+      }
+      .header {
+        order: -2;
+      }
+      .list-item {
+        background: var(--secondary-color);
+        padding: 10px;
+      }
+      .activePlayer {
+        background: rgba(253, 234, 71, 0.4);
+        order: -1;
+        margin-bottom: 10px;
+        padding: 10px;
+      }
+      .fa-robot {
+        color: var(--accent-color);
+      }
+      .icon {
+        width: 5%;
+      }
+    }
+  }
   padding: 10px;
   .title {
     color: var(--text-primary);
@@ -809,7 +902,7 @@ html {
   }
   .nav-bar {
     .logo {
-      width: 110px;
+      width: 85px;
     }
     .menu-open {
       color: white;

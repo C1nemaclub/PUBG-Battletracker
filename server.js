@@ -28,6 +28,9 @@ app.use('/players', userRouter);
 const infoRouter = require('./routes/info');
 app.use('/info', infoRouter);
 
+const matchesRouter = require('./routes/matches');
+app.use('/matches', matchesRouter);
+
 app.get('*', (req, res) => {
   res.render('notfound', { error: res.status(404).statusCode });
 });

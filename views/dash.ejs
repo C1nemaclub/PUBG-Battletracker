@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <link rel="icon" href="/assets/logo.png" type="image/png" />
+    <link rel="icon" href="/assets/titlelogo.png" type="image/png" />
     <title><%- user.overview_data.playernick %>'s Dashboard</title>
   </head>
   <body>
@@ -18,14 +18,14 @@
         <div class="tabs">
           <div class="tab active">Profile</div>
           <form action="/players/matches">
-            <input type="hidden" name="name" value="<%- user.overview_data.playernick %>">
+            <input type="hidden" name="playerName" value="<%- user.overview_data.playernick %>">
             <input type="hidden" name="platform" value="<%- user.overview_data.platform %>">
-            <button type="submit" name="" class="tab matches-tab" disabled>Matches<span class="soon">(soon)</span> </button>
+            <button onclick="passData()" type="submit" name="" class="tab matches-tab" >Matches</button>
           </form>
 
           <!--<div class="tab">Matches <span class="soon">(soon)</span> </div> -->
         </div>
-        <div class="title">Player's Profile</div>
+        <div class="title" >Player's Profile</div>
         <div class="top-content">
           <div class="profile-content cont">
             <div class="header">Profile Overview</div>
@@ -177,7 +177,7 @@
   <script>
 
     let data = JSON.parse('<%- JSON.stringify(user) %>');
-    //console.log(data);
+    console.log(data);
 
     //* OVERVIEW DATA//
     const avatar = document.querySelector('.avatar');
@@ -342,7 +342,8 @@ url('/assets/mapSelection/${data.lastmatch.matchMap}.png')`;
 lastMapImage.style.backgroundPosition = 'center';
 lastMapImage.style.backgroundSize = 'cover';
 
-matchMap.textContent = data.lastmatch.matchMap;
+matchMap.textContent = data.lastmatch.matchMap.charAt(0).toUpperCase() + data.lastmatch.matchMap.slice(1);
+
 matchPlacement.textContent = data.lastmatch.roster[0].placement;
 matchDate.textContent = data.lastmatch.matchDate
   .replace('T', '/')
@@ -439,6 +440,7 @@ it = 0;
       millis: result,
       dmgDone: item.dmgDone,
       knocks: item.knocks,
+      gameMode: item.gameMode
     });
     return result;
   });
@@ -455,14 +457,18 @@ it = 0;
     return item.dmgDone;
   });
 
-  recentChart(last10Kills, last10Knocks, last10DmgDone, last10DatesData);
+  const last10gameModes = sortedbyDate.map((item) => {
+    return item.gameMode;
+  })
 
-  function recentChart(killValue, knocksValue, dmgValue, dates){
+  recentChart(last10Kills, last10Knocks, last10DmgDone, last10DatesData, last10gameModes);
+
+  function recentChart(killValue, knocksValue, dmgValue, dates, modes){
     const ctxx = document.getElementById('pChart').getContext('2d');
   const myChartx = new Chart(ctxx, {
     type: 'line',
     data: {
-      labels: dates,
+      labels: modes,
       datasets: [
         {
           label:
@@ -479,13 +485,19 @@ it = 0;
       scales:{
         y:{
           ticks:{
-            color: 'white'
+            color: 'white',
+            font:{
+              size: '11'
+            }
           },
           beginAtZero: true
         },
         x:{
           ticks:{
-            color: 'white'
+            color: 'white',
+            font: {
+              size: '11'
+            }
           },
           beginAtZero: true
         }
@@ -499,7 +511,7 @@ it = 0;
         legend:{
           labels:{
             font:{
-              size: '14'
+              size: '11'
             },
             color: 'white',
           }
@@ -511,6 +523,13 @@ it = 0;
 }
 }
 //* ----------------------------
+
+
+
+function passData(){
+  window.location.href = `/players/matches?platform=${data.overview_data.platform}&playerName=${data.overview_data.playernick}`
+}
+
 
 function redirect(player){
   window.location.href = `/players/playerData?platform=${data.overview_data.platform}&playerName=${player}`

@@ -1,10 +1,11 @@
 const { escapeRegExpChars } = require('ejs/lib/utils');
 const fetch = require('node-fetch');
-const { forEach } = require('underscore');
+const { forEach, last, reduceRight } = require('underscore');
 const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 const Datastore = require('nedb');
+const moment = require('moment');
 
 const api_key = process.env.API_KEY;
 const database = new Datastore('database.db');
@@ -23,18 +24,40 @@ router.post('/', (req, res) => {
   );
 });
 
-router.post('/matches', (req, res) => {
-  console.log(req.query);
-  console.log('Matches request!');
-  res.render('matches');
-});
+let globalData = {};
+
+const maps = [
+  'Erangel',
+  'Paramo',
+  'Miramar',
+  'Vikendi',
+  'Erangel',
+  'haven',
+  'Camp Jackal',
+  'Sanhok',
+  'Karakin',
+  'taego',
+];
+const mapsKey = [
+  'Baltic_Main',
+  'Chimera_Main',
+  'Desert_Main',
+  'DihorOtok_Main',
+  'Erangel_Main',
+  'Heaven_Main',
+  'Range_Main',
+  'Savage_Main',
+  'Summerland_Main',
+  'Tiger_Main',
+];
 
 router.get('/playerData', async (req, res) => {
+  globalData = {};
   console.log('Request...');
 
   playerName = req.query.playerName;
   playerPlatform = req.query.platform;
-
+  globalData.name = playerName;
   options = {
     method: 'GET',
     headers: {
@@ -97,20 +120,40 @@ router.get('/playerData', async (req, res) => {
           const matchdata = await matchresponse.json();
 
           await matchdata.included.map((player) => {
+            let matchMap = matchdata.data.attributes.mapName;
+            mapsKey.forEach((map) => {
+              if (matchMap == map) {
+                matchMap = maps[mapsKey.indexOf(map)];
+              }
+            });
+            matchMap = matchMap.charAt(0).toUpperCase() + matchMap.slice(1);
+            matchMode = matchdata.data.attributes.gameMode;
+            gameMode = matchMode.charAt(0).toUpperCase() + matchMode.slice(1);
+            const date = moment(matchdata.data.attributes.createdAt).fromNow();
             if (
               player.type == 'participant' &&
               player.attributes.stats.name == playerName
             ) {
               playerRecentStats.push({
                 kills: player.attributes.stats.kills,
-                dmgDone: player.attributes.stats.damageDealt,
+                dmgDone: player.attributes.stats.damageDealt.toFixed(1),
                 knocks: player.attributes.stats.DBNOs,
-                date: matchdata.data.attributes.createdAt,
+                date: date,
+                gameMode: gameMode,
+                placement: player.attributes.stats.winPlace,
+                map: matchMap,
+                timestamp: new Date(
+                  matchdata.data.attributes.createdAt
+                ).getTime(),
+                id: matchdata.data.id,
               });
             }
           });
+          const sortedStats = playerRecentStats.sort((a, b) => {
+            return b.timestamp - a.timestamp;
+          });
 
-          return playerRecentStats;
+          return sortedStats;
         })
       );
 
@@ -129,11 +172,28 @@ router.get('/playerData', async (req, res) => {
         var rosterAssists = [];
         var rosterDmgDealt = [];
         var rosterPlacement = [];
-
+        var playerList = [];
         var target_id;
         //! Evaluate every player type that matches participant and get its ID if it matches the Main Player's roster ID;
         datos.forEach((player) => {
           if (player.type == 'participant') {
+            if (player.attributes.stats.playerId.includes('ai')) {
+              playerList.push({
+                name: player.attributes.stats.name,
+                placement: player.attributes.stats.winPlace,
+                kills: player.attributes.stats.kills,
+                assists: player.attributes.stats.assists,
+                type: 'bot',
+              });
+            } else {
+              playerList.push({
+                name: player.attributes.stats.name,
+                placement: player.attributes.stats.winPlace,
+                kills: player.attributes.stats.kills,
+                assists: player.attributes.stats.assists,
+                type: 'human',
+              });
+            }
             if (player.attributes.stats.name == playerName) {
               target_id = player.id;
             }
@@ -190,31 +250,6 @@ router.get('/playerData', async (req, res) => {
       //* ----------------Getting Last Match Data----------------------------
 
       function gatherLastMatchData() {
-        const maps = [
-          'Erangel',
-          'Paramo',
-          'Miramar',
-          'Vikendi',
-          'Erangel',
-          'haven',
-          'Camp Jackal',
-          'Sanhok',
-          'Karakin',
-          'taego',
-        ];
-        const mapsKey = [
-          'Baltic_Main',
-          'Chimera_Main',
-          'Desert_Main',
-          'DihorOtok_Main',
-          'Erangel_Main',
-          'Heaven_Main',
-          'Range_Main',
-          'Savage_Main',
-          'Summerland_Main',
-          'Tiger_Main',
-        ];
-
         const matchAttributtes = match_data.data.attributes;
         const matchDuration = matchAttributtes.duration;
         const matchGameMode = matchAttributtes.gameMode;
@@ -431,7 +466,12 @@ router.get('/playerData', async (req, res) => {
           stats: playerOverallStats,
           lastmatch: lastMatchData,
           recentStats: recentData[0].value,
+          lastMatchplayerList: playerList,
         };
+
+        globalData.lastMatchplayerList = playerList;
+        globalData.last10MatchesData = recentData[0].value;
+
         res.render('dash', { user: mainData });
       } else {
         let mainData = {
@@ -440,6 +480,7 @@ router.get('/playerData', async (req, res) => {
           stats: playerOverallStats,
           lastmatch: lastMatchData,
           recentStats: 'Failed',
+          lastMatchplayerList: 'Failed',
         };
         res.render('dash', { user: mainData });
       }
@@ -455,6 +496,90 @@ router.get('/playerData', async (req, res) => {
     }
   } catch (e) {
     console.log(e);
+  }
+});
+
+options = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    Authorization: 'Bearer ' + api_key,
+  },
+};
+router.get('/matches', async (req, res) => {
+  console.log(req.query);
+
+  try {
+    let playerPlatform = req.query.platform;
+    let playerName = req.query.playerName;
+    const playerId_url = `https://api.pubg.com/shards/${playerPlatform}/players?filter[playerNames]=${playerName}`;
+    const playerId_response = await fetch(playerId_url, options);
+    const playerId_data = await playerId_response.json();
+
+    const allMatches = playerId_data.data[0].relationships.matches.data;
+    const last10MatchesId = allMatches.slice(0, 10).map((match) => {
+      return match.id;
+    });
+
+    let playerRecentStats = [];
+    const allPromises = Promise.allSettled(
+      last10MatchesId.map(async (match) => {
+        const matchurl = `https://api.pubg.com/shards/${playerPlatform}/matches/${match}`;
+        const matchresponse = await fetch(matchurl, options);
+        const matchdata = await matchresponse.json();
+
+        await matchdata.included.map((player) => {
+          let matchMap = matchdata.data.attributes.mapName;
+          mapsKey.forEach((map) => {
+            if (matchMap == map) {
+              matchMap = maps[mapsKey.indexOf(map)];
+            }
+          });
+          matchMap = matchMap.charAt(0).toUpperCase() + matchMap.slice(1);
+          matchMode = matchdata.data.attributes.gameMode;
+          gameMode = matchMode.charAt(0).toUpperCase() + matchMode.slice(1);
+          const date = moment(matchdata.data.attributes.createdAt).fromNow();
+          if (
+            player.type == 'participant' &&
+            player.attributes.stats.name == playerName
+          ) {
+            playerRecentStats.push({
+              kills: player.attributes.stats.kills,
+              dmgDone: player.attributes.stats.damageDealt.toFixed(1),
+              knocks: player.attributes.stats.DBNOs,
+              date: date,
+              gameMode: matchdata.data.attributes.gameMode,
+              placement: player.attributes.stats.winPlace,
+              map: matchMap,
+              timestamp: new Date(
+                matchdata.data.attributes.createdAt
+              ).getTime(),
+              id: matchdata.data.id,
+              platform: playerPlatform,
+              playerName: playerName,
+            });
+          }
+        });
+
+        return playerRecentStats;
+      })
+    );
+
+    const promiseResult = await allPromises;
+    const last10MatchesData = promiseResult[0].value;
+
+    const sortedMatches = last10MatchesData.sort((a, b) => {
+      return b.timestamp - a.timestamp;
+    });
+
+    let data = {};
+    data.last10MatchesData = sortedMatches;
+    data.name = playerName;
+    data.platform = playerPlatform;
+
+    res.render('matches', { data: data });
+  } catch {
+    res.render('notfound', { error: 'No Matches Found' });
   }
 });
 

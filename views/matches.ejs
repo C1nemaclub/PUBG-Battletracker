@@ -5,10 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-    <title>PUBG Battletracker Matches</title>
+    <link rel="icon" href="/assets/titlelogo.png" type="image/png" />
+    <title><%=data.name%>'s Dashboard</title>
   </head>
   <body>
-    <%- include("./partials/header.ejs") %> Matches <%-
-    include("./partials/footer.ejs") %>
+    <div id="preloader"></div>
+    <div class="dashboard">
+      <%- include("./partials/header.ejs") %>
+
+      <div class="main-content">
+        <div class="tabs">
+          <div class="tab" onclick="window.history.go(-1); return false;">
+            Profile
+          </div>
+
+          <form action="/players/matches">
+            <input type="hidden" name="playerName" value="" />
+            <input type="hidden" name="platform" value="" />
+            <button
+              type="submit"
+              name=""
+              class="tab matches-tab active"
+              disabled
+            >
+              Matches
+            </button>
+          </form>
+        </div>
+        <div class="title"><%=data.name%>'s Profile</div>
+        <div class="match-content">
+          <ul class="match-list">
+            <li class="header">
+              <div class="map item">Map</div>
+              <div class="date item">When</div>
+              <div class="kills item">Kills</div>
+              <div class="damage item">Damage</div>
+              <div class="placement item">Placement</div>
+              <div class="mode item">Mode</div>
+            </li>
+            <% data.last10MatchesData.forEach(match=>{ %>
+            <li
+              class="match-item listItem"
+              onclick="getMatch('<%=match.id %>')"
+            >
+              <div class="map item"><%=match.map %></div>
+              <div class="date item"><%=match.date %></div>
+              <div class="kills item"><%=match.kills %></div>
+              <div class="damage item"><%=match.dmgDone %></div>
+              <div class="placement item"><%=match.placement %></div>
+              <div class="mode item"><%=match.gameMode %></div>
+              <div class="id item toHide"><%=match.id %></div>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+      <%-include("./partials/footer.ejs") %>
+    </div>
+    <script defer>
+      const loader = document.querySelector('#preloader');
+      window.addEventListener('load', () => {
+        loader.style.display = 'none';
+      });
+
+      /*
+      const presentCurrent = document.querySelector('.dashCurrent');
+      presentCurrent.classList.add('current');
+      */
+      const previousCurrent = document.querySelector('.current');
+      previousCurrent.classList.remove('current');
+
+      const nav_list = document.querySelector('.list-items');
+      const open_icon = document.querySelector('.menu-open');
+      const close_icon = document.querySelector('.menu-close');
+
+      open_icon.addEventListener('click', () => {
+        nav_list.style.left = '85%';
+        open_icon.style.display = 'none';
+        close_icon.style.display = 'unset';
+      });
+      close_icon.addEventListener('click', () => {
+        nav_list.style.left = '125%';
+        open_icon.style.display = 'unset';
+        close_icon.style.display = 'none';
+      });
+    </script>
+
+    <script defer>
+      let parsedData = JSON.parse('<%- JSON.stringify(data) %>');
+      console.log(parsedData);
+      const playerName = parsedData.name;
+      const playerPlatform = parsedData.platform;
+      function getMatch(id) {
+        console.log(id);
+        window.location.href = `/matches?matchId=${id}&playerName=${playerName}&platform=${playerPlatform}`;
+      }
+    </script>
   </body>
 </html>

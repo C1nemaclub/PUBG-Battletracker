@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="icon" href="/assets/titlelogo.png" type="image/png" />
+    <title><%=data.name%>'s Dashboard</title>
+  </head>
+  <script
+    src="https://kit.fontawesome.com/b109f342ec.js"
+    crossorigin="anonymous"
+  ></script>
+  <body>
+    <div id="preloader"></div>
+    <div class="dashboard">
+      <%- include("./partials/header.ejs") %>
+
+      <div class="main-content">
+        <div class="tabs">
+          <div class="tab" onclick="window.history.go(-2); return false;">
+            Profile
+          </div>
+
+          <form action="/players/matches">
+            <input type="hidden" name="playerName" value="" />
+            <input type="hidden" name="platform" value="" />
+            <button
+              onclick="window.history.go(-1); return false"
+              type="submit"
+              name=""
+              class="tab matches-tab"
+            >
+              Matches
+            </button>
+          </form>
+        </div>
+        <div class="title"><%=data.name%>'s Profile</div>
+        <div class="specific-match-content">
+          <div class="playerdata">
+            <div class="header">Match Results</div>
+            <ul class="data-list">
+              <% const keys = Object.keys(data.playerData); %> <% const values =
+              Object.values(data.playerData); %> <% let index; %> <%
+              keys.forEach(item=>{ %> <% index = keys.indexOf(item) %>
+              <li class="list-item">
+                <div><%= keys[index] %></div>
+                <div><%= values[index] %></div>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="playerlist">
+            <div class="header">Player List</div>
+            <ul class="data-list">
+              <li class="header">
+                <div class="item icon">Type</div>
+                <div class="item">Player</div>
+                <div class="item">Kills</div>
+                <div class="item">Placement</div>
+              </li>
+              <% data.playerList.forEach(player=> { %> <% if(player.name ==
+              data.name){ %>
+              <li class="activePlayer">
+                <i class="icon icon-player fa-solid fa-<%=player.type%>"></i>
+                <div class="item"><%= player.name %></div>
+                <div class="item"><%= player.kills %></div>
+                <div class="item"><%= player.placement %></div>
+              </li>
+              <% } else {%>
+              <li class="list-item">
+                <i class="icon fa-solid fa-<%=player.type%>"></i>
+                <div class="item"><%= player.name %></div>
+                <div class="item"><%= player.kills %></div>
+                <div class="item"><%= player.placement %></div>
+              </li>
+              <% }%> <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <%-include("./partials/footer.ejs") %>
+    </div>
+  </body>
+</html>
+
+<script defer>
+  const loader = document.querySelector('#preloader');
+  window.addEventListener('load', () => {
+    loader.style.display = 'none';
+  });
+
+  /*
+    const presentCurrent = document.querySelector('.dashCurrent');
+    presentCurrent.classList.add('current');
+    */
+  const previousCurrent = document.querySelector('.current');
+  previousCurrent.classList.remove('current');
+
+  const nav_list = document.querySelector('.list-items');
+  const open_icon = document.querySelector('.menu-open');
+  const close_icon = document.querySelector('.menu-close');
+
+  open_icon.addEventListener('click', () => {
+    nav_list.style.left = '85%';
+    open_icon.style.display = 'none';
+    close_icon.style.display = 'unset';
+  });
+  close_icon.addEventListener('click', () => {
+    nav_list.style.left = '125%';
+    open_icon.style.display = 'unset';
+    close_icon.style.display = 'none';
+  });
+</script>
+<script>
+  let data = JSON.parse('<%- JSON.stringify(data) %>');
+  console.log(data);
+</script>
