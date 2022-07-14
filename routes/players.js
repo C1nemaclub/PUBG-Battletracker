@@ -423,39 +423,46 @@ router.get('/playerData', async (req, res) => {
           'Winchester',
           'Skorpion',
         ];
-        let weaponsData = weapons_data.data.attributes.weaponSummaries;
-        let weaponStats = [];
-        let top10Weapons = [];
-        let weaponsObj = [];
-        for (weapon in Object.values(weaponsData)) {
-          weaponStats.push([
-            Object.keys(weaponsData)[weapon],
-            Object.values(weaponsData)[weapon].StatsTotal.Kills,
-            Object.values(weaponsData)[weapon].StatsTotal.HeadShots,
-            Object.values(weaponsData)[weapon].LevelCurrent,
-            realWeaponNames[weapon],
-          ]);
-        }
-        //! Sort weapons by most kills
-        let sortedWeapons = weaponStats.sort((a, b) => {
-          return b[1] - a[1];
-        });
 
-        for (let i = 0; i < 10; i++) {
-          top10Weapons.push(sortedWeapons[i]);
-        }
+        try {
+          let weaponsData = weapons_data.data.attributes.weaponSummaries;
 
-        top10Weapons.forEach((weapon) => {
-          weaponsObj.push({
-            name: weapon[4],
-            weapon: weapon[0],
-            kills: weapon[1],
-            headShots: weapon[2],
-            level: weapon[3],
+          let weaponStats = [];
+          let top10Weapons = [];
+          let weaponsObj = [];
+          for (weapon in Object.values(weaponsData)) {
+            weaponStats.push([
+              Object.keys(weaponsData)[weapon],
+              Object.values(weaponsData)[weapon].StatsTotal.Kills,
+              Object.values(weaponsData)[weapon].StatsTotal.HeadShots,
+              Object.values(weaponsData)[weapon].LevelCurrent,
+              realWeaponNames[weapon],
+            ]);
+          }
+
+          //! Sort weapons by most kills
+          let sortedWeapons = weaponStats.sort((a, b) => {
+            return b[1] - a[1];
           });
-        });
 
-        return weaponsObj;
+          for (let i = 0; i < 10; i++) {
+            top10Weapons.push(sortedWeapons[i]);
+          }
+
+          top10Weapons.forEach((weapon) => {
+            weaponsObj.push({
+              name: weapon[4],
+              weapon: weapon[0],
+              kills: weapon[1],
+              headShots: weapon[2],
+              level: weapon[3],
+            });
+          });
+
+          return weaponsObj;
+        } catch (e) {
+          console.log(e);
+        }
       }
       playerWeaponStats();
       best10Weapons = playerWeaponStats();
